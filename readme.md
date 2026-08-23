@@ -1,4 +1,4 @@
-# Kabootar
+# Kabutarr
 
 A minimal messaging interface built with React and Vite.
 
