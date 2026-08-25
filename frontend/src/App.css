@@ -11,13 +11,13 @@
   display: flex;
   flex-direction: column;
   align-items: end;
-  gap: 2em;
-  padding : 2em;
-
+  gap: 0.2em;
+  padding : 2em 21em;
+  overflow-y: auto;
 }
 
 .msg-out {
-    background-color: #2a2b2d;
+    background-color: #400324;
     color: white;
     font-size: 1.3em;
     line-height: 1.5em;
@@ -28,17 +28,19 @@
 
   
 }
-
 .msg-in {
-  background-color: #2a2b2d;
-  color: #c5c5c5;
-  font-size: 1.3em;
-  line-height: 1.2em;
-  padding: 2em 2em;
-  border: 1px solid #404141;
-  width: 80%;
-  border-radius: 31px;
+    background-color: #2a2b2d;
+    color: white;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    max-width: 75%;
+    padding: 10px 12px 10px;
+    border-radius: 31px;
+    height: fit-content;
+    align-self: start;
+  
 }
+
 
 .textArea {
   padding: 2em 18em;

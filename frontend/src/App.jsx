@@ -2,18 +2,86 @@ import './App.css'
 import logo from "./assets/send.png"
 import { useState } from "react";
 
+class Message {
+    constructor(id, text, time, from, to) {
+        this.id = id;
+        this.text = text;
+        this.time = time;
+        this.from = from;
+        this.to = to;
+    }
+}
+
 function App() {
+  let dummyMessages = [
+    new Message(1,
+        "Hey, are you coming to class today?",
+        new Date("2026-08-25T09:15:00"),
+        "dummyUser",
+        "Rahul"
+    ),
+
+    new Message(2, 
+        "Yeah, I'll be there in 10 minutes.",
+        new Date("2026-08-25T09:14:00"),
+        "Rahul",
+        "dummyUser"
+    ),
+
+    new Message(3,
+        "Cool, don't forget the assignment.",
+        new Date("2026-08-25T09:18:00"),
+        "dummyUser",
+        "Rahul"
+    ),
+
+    new Message(4,
+        "Oh right! I'll finish it before class.",
+        new Date("2026-08-25T09:20:00"),
+        "Rahul",
+        "dummyUser"
+    ),
+
+    new Message(5,
+        "Perfect 👍",
+        new Date("2026-08-25T09:21:00"),
+        "dummyUser",
+        "Rahul"
+    )
+];
+  const currentUser = "dummyUser";
+  const currentToUser = "dummy2";
   const [msg, setMsg] = useState("");
-  const [showButton, setShowButton] = useState()
+  const [showButton, setShowButton] = useState(false);
+  const [allMsgList, setAllMsgList] = useState(dummyMessages);
+
+
+
+  function sendmsg(msg, to){
+    console.log("Msg Sent:", msg);
+    const randomMsgId = Math.floor(Math.random() * 1000); // change it later to not coincide with previous ones
+    
+    setAllMsgList((messages) => [
+      ...messages,
+      new Message(randomMsgId, msg, new Date(), currentUser, to),
+    ]);
+    setMsg(""); //reseting the textbox blank 
+  }
 
 
   return (
     <>
       <div className="parent">
         <div className="chats">
-          <div className="msg-out">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sint quam aliquid tenetur facilis debitis saepe asperiores culpa praesentium, perspiciatis quibusdam velit quia repellendus, dolor ex esse provident voluptate vel consectetur animi?</div>
-          <div className="msg-out">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sint quam aliquid tenetur facilis debitis </div>
-          <div className="msg-out">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga sint quam aliquid tenetur facilis debitis saepe asperiores </div>
+          {
+            allMsgList
+            .sort((a, b)=> a.time - b.time)
+            .map((msg)=>{
+              return (
+                <div className={msg.from === currentUser?'msg-out': 'msg-in'} key={msg.id}> {msg.text}</div>
+              )
+            })
+          }
         </div>
 
         <div className="textArea">
@@ -28,13 +96,16 @@ function App() {
             }}
             onKeyDown={(e)=>{
               if(e.key==="Enter"){
-                sendmsg(msg);
+                sendmsg(msg, currentToUser);
+                console.log(allMsgList);
+                
+                
               }
               
             }} />
 
           {showButton && (
-            <button className='send' > <img src={logo} alt="logo" width="20" /> </button>
+            <button onClick={() => sendmsg(msg, currentToUser)} className='send' > <img src={logo} alt="logo" width="20" /> </button>
           )}
 
         </div>
