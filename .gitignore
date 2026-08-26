@@ -21,3 +21,32 @@
 /frontend/*.njsproj
 /frontend/*.sln
 /frontend/*.sw?
+
+# Backend logs
+/backend/*.log
+/backend/npm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+/backend/pnpm-debug.log*
+/backend/lerna-debug.log*
+
+/backend/node_modules
+/backend/dist
+/backend/dist-ssr
+/backend/*.local
+
+# Backend environment variables
+/backend/.env
+/backend/.env.*
+!/backend/.env.example
+
+# Editor directories and files
+/backend/.vscode/*
+!/backend/.vscode/extensions.json
+/backend/.idea
+/backend/.DS_Store
+/backend/*.suo
+/backend/*.ntvs*
+/backend/*.njsproj
+/backend/*.sln
+/backend/*.sw?

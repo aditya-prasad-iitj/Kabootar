@@ -1,6 +1,16 @@
 import './App.css'
 import logo from "./assets/send.png"
 import { useState } from "react";
+import {io} from "socket.io-client"
+
+function randomMsgId(alrdyIds){ 
+  let num;
+  do{
+    num = Math.floor(Math.random() * 10000);
+  }while(alrdyIds.includes(num))
+
+    return num;
+}
 
 class Message {
     constructor(id, text, time, from, to) {
@@ -12,59 +22,67 @@ class Message {
     }
 }
 
+
+const socket = io("http://localhost:3000");
+console.log(socket);
+
+
 function App() {
   let dummyMessages = [
     new Message(1,
-        "Hey, are you coming to class today?",
-        new Date("2026-08-25T09:15:00"),
-        "dummyUser",
-        "Rahul"
+      "Hey, are you coming to class today?",
+      new Date("2026-08-25T09:15:00"),
+      "dummyUser",
+      "Rahul"
     ),
-
+    
     new Message(2, 
-        "Yeah, I'll be there in 10 minutes.",
-        new Date("2026-08-25T09:14:00"),
-        "Rahul",
-        "dummyUser"
+      "Yeah, I'll be there in 10 minutes.",
+      new Date("2026-08-25T09:14:00"),
+      "Rahul",
+      "dummyUser"
     ),
-
+    
     new Message(3,
-        "Cool, don't forget the assignment.",
-        new Date("2026-08-25T09:18:00"),
-        "dummyUser",
-        "Rahul"
+      "Cool, don't forget the assignment.",
+      new Date("2026-08-25T09:18:00"),
+      "dummyUser",
+      "Rahul"
     ),
-
+    
     new Message(4,
-        "Oh right! I'll finish it before class.",
-        new Date("2026-08-25T09:20:00"),
-        "Rahul",
-        "dummyUser"
+      "Oh right! I'll finish it before class.",
+      new Date("2026-08-25T09:20:00"),
+      "Rahul",
+      "dummyUser"
     ),
-
+    
     new Message(5,
-        "Perfect 👍",
-        new Date("2026-08-25T09:21:00"),
-        "dummyUser",
-        "Rahul"
+      "Perfect 👍",
+      new Date("2026-08-25T09:21:00"),
+      "dummyUser",
+      "Rahul"
     )
-];
+  ];
   const currentUser = "dummyUser";
   const currentToUser = "dummy2";
   const [msg, setMsg] = useState("");
   const [showButton, setShowButton] = useState(false);
   const [allMsgList, setAllMsgList] = useState(dummyMessages);
-
-
-
-  function sendmsg(msg, to){
-    console.log("Msg Sent:", msg);
-    const randomMsgId = Math.floor(Math.random() * 1000); // change it later to not coincide with previous ones
+  
+  
+  
+  async function sendmsg(msg, to){
+    // console.log("Msg Sent:", msg);
+    // change it later to not coincide with previous ones
     
     setAllMsgList((messages) => [
       ...messages,
-      new Message(randomMsgId, msg, new Date(), currentUser, to),
+      new Message(randomMsgId(allMsgList.map((msg)=>msg.id)), msg, new Date(), currentUser, to),
     ]);
+
+    await socket.emit("newMsg", new Message(randomMsgId(allMsgList.map((msg)=>msg.id)),msg,new Date(),currentUser, to ));
+
     setMsg(""); //reseting the textbox blank 
   }
 
