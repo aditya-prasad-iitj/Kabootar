@@ -35,10 +35,10 @@
 /backend/dist-ssr
 /backend/*.local
 
-# Backend environment variables
-/backend/.env
-/backend/.env.*
-!/backend/.env.example
+# Environment variables
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 /backend/.vscode/*
