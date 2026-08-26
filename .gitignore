@@ -36,8 +36,8 @@
 /backend/*.local
 
 # Environment variables
-.env
-.env.*
+./.env
+./.env.*
 
 # Editor directories and files
 /backend/.vscode/*
